@@ -12,4 +12,4 @@ spec:
     - "{{ $.Release.Namespace }}"
   selector:
     matchLabels:
-      svcmon: "{{ .Release.Name }}"-elasticsearch
+      svcmon: "{{ .Release.Name }}"-elasticsearch-client
