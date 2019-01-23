@@ -12,6 +12,7 @@ ingress:
   domain: local
 
 mongodb:
+  name: mongodb
   version: 3.6-v1
   replicas: 3
   replicaSetName: koen
@@ -21,6 +22,7 @@ mongodb:
   mongodbDatabase: graylog
 
 elasticsearch:
+  name: elasticsearch
   version: 6.4
   client:
     storage:
