@@ -46,6 +46,7 @@ External protocol
 {{- .Values.ingress.protocol -}}
 {{- end -}}
 {{- end -}}
+
 {{/*
 Create a default fully qualified graylog master name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
@@ -58,7 +59,6 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s-%s" .Release.Name $name .Values.graylog.master.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 {{- end -}}
-
 
 {{/*
 Create a default fully qualified graylog slave name.
@@ -73,8 +73,31 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 {{- end -}}
 
+{{/*
+Create a default fully qualified elasticsearch name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "elasticsearch.fullname" -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.elasticsearch.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.elasticsearch.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
 
-
+{{/*
+Create a default fully qualified mongodb name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "mongodb.fullname" -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.mongodb.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.mongodb.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Create chart name and version as used by the chart label.
