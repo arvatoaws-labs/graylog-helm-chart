@@ -18,6 +18,7 @@ mongodb:
   storage:
     storageClass: gp2
     storageSize: 5Gi
+  mongodbDatabase: graylog
 
 elasticsearch:
   version: 6.4

@@ -68,8 +68,18 @@ spec:
               secretKeyRef:
                 name: {{ template "graylog.master.fullname" . }}
                 key: root-username
+          - name: MONGODB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "mongodb.fullname" . }}-auth
+                key: password
+          - name: MONGODB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "mongodb.fullname" . }}-auth
+                key: username
           - name: GRAYLOG_MONGODB_URI
-            value: "mongodb://{{ .Values.mongodb.mongodbUsername }}:{{ .Values.mongodb.mongodbPassword }}@{{ $mongodbServiceName }}-mongodb-primary-0.{{ $mongodbServiceName }}-mongodb-headless:27017,{{ $mongodbServiceName }}-mongodb-secondary-0.{{ $mongodbServiceName }}-mongodb-headless:27017,{{ $mongodbServiceName }}-mongodb-secondary-1.{{ $mongodbServiceName }}-mongodb-headless:27017/{{ .Values.mongodb.mongodbDatabase }}?replicaSet=rs0"
+            value: "mongodb://$MONGODB_ROOT_USERNAME:$MONGODB_ROOT_PASSWORD@{{ $mongodbServiceName }}-gvr:27017/{{ .Values.mongodb.mongodbDatabase }}?replicaSet={{ .Values.mongodb.replicaSetName }}"
           - name: GRAYLOG_IS_MASTER
             value: "true"
           - name: GRAYLOG_ELASTICSEARCH_HOSTS
