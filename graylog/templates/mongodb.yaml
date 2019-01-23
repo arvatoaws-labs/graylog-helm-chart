@@ -1,0 +1,25 @@
+apiVersion: kubedb.com/v1alpha1
+kind: MongoDB
+metadata:
+  name: {{ template "mongodb.fullname" . }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  version: {{ .Values.mongodb.version }}
+  replicas: {{ .Values.mongodb.replicas }}
+  replicaSet:
+    name: {{ .Values.mongodb.replicaSetName }}
+  storage:
+    storageClassName: {{ .Values.mongodb.storage.storageClass }}
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: {{ .Values.mongodb.storage.storageSize  }}
+  monitor:
+    agent: prometheus.io/coreos-operator
+    prometheus:
+      namespace: {{ $.Release.Namespace }}
+      labels:
+        release: prometheus
+      interval: 10s
+    terminationPolicy: WipeOut

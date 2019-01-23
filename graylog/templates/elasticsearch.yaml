@@ -1,0 +1,68 @@
+apiVersion: kubedb.com/v1alpha1
+kind: Elasticsearch
+metadata:
+  name: {{ template "elasticsearch.fullname" . }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  version: {{ .Values.elasticsearch.version }}
+  storageType: Durable
+  topology:
+    master:
+      prefix: master
+      replicas: {{ .Values.elasticsearch.master.replicas }}
+      storage:
+        storageClassName: {{ .Values.elasticsearch.master.storage.storageClass }}
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.elasticsearch.master.storage.storageSize  }}
+      resources:
+        requests:
+          memory: {{ .Values.elasticsearch.master.requests.memory  }}
+          cpu: {{ .Values.elasticsearch.master.requests.cpu  }}
+        limits:
+          memory: {{ .Values.elasticsearch.master.limits.memory  }}
+          cpu: {{ .Values.elasticsearch.master.limits.cpu  }}
+    data:
+      prefix: data
+      replicas: {{ .Values.elasticsearch.data.replicas }}
+      storage:
+        storageClassName: {{ .Values.elasticsearch.data.storage.storageClass }}
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.elasticsearch.data.storage.storageSize  }}
+        limits:
+          memory: {{ .Values.elasticsearch.data.limits.memory  }}
+          cpu: {{ .Values.elasticsearch.data.limits.cpu  }}
+      resources:
+        requests:
+          memory: {{ .Values.elasticsearch.data.requests.memory  }}
+          cpu: {{ .Values.elasticsearch.data.requests.cpu  }}
+    client:
+      prefix: client
+      replicas: {{ .Values.elasticsearch.client.replicas }}
+      storage:
+        storageClassName: {{ .Values.elasticsearch.client.storage.storageClass }}
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.elasticsearch.client.storage.storageSize  }}
+      resources:
+        requests:
+          memory: {{ .Values.elasticsearch.client.requests.memory  }}
+          cpu: {{ .Values.elasticsearch.client.requests.cpu  }}
+        limits:
+          memory: {{ .Values.elasticsearch.client.limits.memory  }}
+          cpu: {{ .Values.elasticsearch.client.limits.cpu  }}
+  monitor:
+    agent: prometheus.io/coreos-operator
+    prometheus:
+      namespace: {{ $.Release.Namespace }}
+      labels:
+        release: prometheus
+      interval: 10s
+    terminationPolicy: WipeOut

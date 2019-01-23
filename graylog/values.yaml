@@ -11,6 +11,50 @@ ingress:
   protocol: https
   domain: local
 
+mongodb:
+  version: 3.6-v1
+  replicas: 3
+  replicaSetName: koen
+  storage:
+    storageClass: gp2
+    storageSize: 5Gi
+
+elasticsearch:
+  version: 6.4
+  client:
+    storage:
+      storageClass: gp2
+      storageSize: 1Gi
+    limits:
+      cpu: 1
+      memory: 1024Mi
+    requests:
+      cpu: 256m
+      memory: 512Mi
+    replicas: 2
+  master:
+    storage:
+      storageClass: gp2
+      storageSize: 4Gi
+    limits:
+      cpu: 1
+      memory: 1024Mi
+    requests:
+      cpu: 256m
+      memory: 512Mi
+    replicas: 3
+  data:
+    storage:
+      storageClass: gp2
+      storageSize: 50Gi
+    limits:
+      cpu: 1
+      memory: 2048Mi
+    requests:
+      cpu: 1
+      memory: 1536Mi
+    replicas: 3
+
 graylog:
   name: graylog
   appVersion: 2.4.6
