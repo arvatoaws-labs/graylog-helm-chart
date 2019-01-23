@@ -1,7 +1,0 @@
-dependencies:
-  - name: mongodb
-    version: 0.1.3
-    repository: "https://github.com/arvatoaws/mongodb-helm-chart/tree/master/mongodb"
-  - name: elasticsearch
-    version: 0.1.22
-    repository: "https://github.com/arvatoaws/elasticsearch-helm-chart/tree/master/elasticsearch"
