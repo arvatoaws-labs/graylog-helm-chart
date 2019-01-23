@@ -1,7 +1,7 @@
 apiVersion: kubedb.com/v1alpha1
 kind: MongoDB
 metadata:
-  name: {{ template "mongodb.fullname" . }}
+  name: {{ template "graylog.fullname" . }}-mongodb
   namespace: {{ $.Release.Namespace }}
 spec:
   version: {{ .Values.mongodb.version }}

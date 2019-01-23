@@ -1,7 +1,7 @@
 apiVersion: kubedb.com/v1alpha1
 kind: Elasticsearch
 metadata:
-  name: {{ template "elasticsearch.fullname" . }}
+  name: {{ template "graylog.fullname" . }}-elasticsearch
   namespace: {{ $.Release.Namespace }}
 spec:
   version: {{ .Values.elasticsearch.version }}
