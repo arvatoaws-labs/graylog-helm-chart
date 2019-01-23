@@ -71,12 +71,12 @@ spec:
           - name: MONGODB_ROOT_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ template "mongodb.fullname" . }}-auth
+                name: {{ $mongodbServiceName }}-auth
                 key: password
           - name: MONGODB_ROOT_USERNAME
             valueFrom:
               secretKeyRef:
-                name: {{ template "mongodb.fullname" . }}-auth
+                name: {{ $mongodbServiceName }}-auth
                 key: username
           - name: GRAYLOG_MONGODB_URI
             value: "mongodb://$MONGODB_ROOT_USERNAME:$MONGODB_ROOT_PASSWORD@{{ $mongodbServiceName }}-gvr:27017/{{ .Values.mongodb.mongodbDatabase }}?replicaSet={{ .Values.mongodb.replicaSetName }}"
