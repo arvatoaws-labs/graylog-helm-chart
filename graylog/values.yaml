@@ -19,7 +19,7 @@ mongodb:
   storage:
     storageClass: gp2
     storageSize: 5Gi
-  mongodbDatabase: graylog
+  mongodbDatabase: admin
 
 elasticsearch:
   name: elasticsearch
