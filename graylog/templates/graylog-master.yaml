@@ -76,6 +76,8 @@ spec:
               secretKeyRef:
                 name: {{ template "mongodb.fullname" . }}-auth
                 key: username
+          - name: GRAYLOG_MONGODB_URI
+            value: "mongodb://$MONGODB_ROOT_USERNAME:$MONGODB_ROOT_PASSWORD@{{ template "mongodb.fullname" . }}-gvr:27017/{{ .Values.mongodb.mongodbDatabase }}?replicaSet={{ .Values.mongodb.replicaSetName }}"
           - name: MONGODB_URL
             value: "{{ template "mongodb.fullname" . }}-gvr"
           - name: MONGODB_PORT
