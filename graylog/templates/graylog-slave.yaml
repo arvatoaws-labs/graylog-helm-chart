@@ -67,15 +67,15 @@ spec:
                 name: {{ template "mongodb.fullname" . }}-auth
                 key: username
           -- name: MONGODB_URL
-            value: {{ template "mongodb.fullname" . }}-gvr
+            value: "{{ template "mongodb.fullname" . }}-gvr"
           - name: MONGODB_PORT
-            value: 27017
+            value: "27017"
           - name: MONGODB_DATABASE
-            value: {{ .Values.mongodb.mongodbDatabase }}
+            value: "{{ .Values.mongodb.mongodbDatabase }}"
           - name: MONGODB_REPLICASET
-            value: {{ .Values.mongodb.replicaSetName }}
+            value: "{{ .Values.mongodb.replicaSetName }}"
           - name: GRAYLOG_IS_MASTER
-            value: false
+            value: "false"
           - name: GRAYLOG_ELASTICSEARCH_HOSTS
             value: "http://{{ .Release.Name }}-elasticsearch-client:9200"
           - name: GRAYLOG_WEB_LISTEN_URI
