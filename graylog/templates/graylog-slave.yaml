@@ -66,7 +66,7 @@ spec:
               secretKeyRef:
                 name: {{ template "mongodb.fullname" . }}-auth
                 key: username
-          -- name: MONGODB_URL
+          - name: MONGODB_URL
             value: "{{ template "mongodb.fullname" . }}-gvr"
           - name: MONGODB_PORT
             value: "27017"
