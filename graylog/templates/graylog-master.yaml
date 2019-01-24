@@ -76,10 +76,16 @@ spec:
               secretKeyRef:
                 name: {{ template "mongodb.fullname" . }}-auth
                 key: username
-          - name: GRAYLOG_MONGODB_TMP_URI
-            value: "{{ template "mongodb.fullname" . }}-gvr:27017/{{ .Values.mongodb.mongodbDatabase }}?replicaSet={{ .Values.mongodb.replicaSetName }}"
+          - name: MONGODB_URL
+            value: {{ template "mongodb.fullname" . }}-gvr
+          - name: MONGODB_PORT
+            value: 27017
+          - name: MONGODB_DATABASE
+            value: {{ .Values.mongodb.mongodbDatabase }}
+          - name: MONGODB_REPLICASET
+            value: {{ .Values.mongodb.replicaSetName }}
           - name: GRAYLOG_IS_MASTER
-            value: "true"
+            value: true
           - name: GRAYLOG_ELASTICSEARCH_HOSTS
             value: "http://{{ .Release.Name }}-elasticsearch-client:9200"
           - name: GRAYLOG_WEB_LISTEN_URI
@@ -93,7 +99,7 @@ spec:
           - name: GRAYLOG_SERVER_JAVA_OPTS
             value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:NewRatio=1 -XX:MaxMetaspaceSize=256m -server -XX:+ResizeTLAB -XX:+UseConcMarkSweepGC -XX:+CMSConcurrentMTEnabled -XX:+CMSClassUnloadingEnabled -XX:+UseParNewGC -XX:-OmitStackTraceInFastThrow'"
           - name: metrics_prometheus_enabled
-            value: "true"
+            value: true
           ports:
           - containerPort: {{ .Values.graylog.web.service.internalPort }}
             name: http
