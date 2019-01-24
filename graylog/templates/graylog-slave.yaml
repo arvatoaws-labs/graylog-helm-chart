@@ -80,8 +80,6 @@ spec:
             value: "http://0.0.0.0:{{ .Values.graylog.web.service.internalPort }}/api/"
           - name: GRAYLOG_REST_TRANSPORT_URI
             value: "http://$(MY_POD_IP):{{ .Values.graylog.web.service.internalPort }}/api/"
-          - name: GRAYLOG_SERVER_JAVA_OPTS
-            value: "-Xms1g -Xmx1g -XX:NewRatio=1 -XX:MaxMetaspaceSize=256m -server -XX:+ResizeTLAB -XX:+UseConcMarkSweepGC -XX:+CMSConcurrentMTEnabled -XX:+CMSClassUnloadingEnabled -XX:+UseParNewGC -XX:-OmitStackTraceInFastThrow"
           ports:
           - containerPort: {{ .Values.graylog.web.service.internalPort }}
             name: http
