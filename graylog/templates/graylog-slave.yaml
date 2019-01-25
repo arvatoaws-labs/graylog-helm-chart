@@ -90,6 +90,8 @@ spec:
             value: "{{ .Release.Name }}-elasticsearch"
           - name: ELASTICSEARCH_PORT
             value: "9200"
+          - name: GRAYLOG_SERVER_JAVA_OPTS
+            value: "{{ .Values.graylog.slave.javaOpts }}"
           - name: GRAYLOG_WEB_LISTEN_URI
             value: "http://0.0.0.0:{{ .Values.graylog.web.service.internalPort }}/"
           - name: GRAYLOG_WEB_ENDPOINT_URI
