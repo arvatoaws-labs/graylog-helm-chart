@@ -37,6 +37,9 @@ spec:
           - backend:
               serviceName: {{ $fullName }}
               servicePort: http
+    - host: {{ .Release.Name }}-elastichq.{{required "A valid .Values.ingress.domain entry required!" .Values.ingress.domain }}
+      http:
+        paths:
           - backend:
               serviceName: {{ $elasticsearchName }}-hq
               servicePort: 5000
