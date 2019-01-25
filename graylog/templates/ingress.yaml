@@ -41,6 +41,9 @@ spec:
       http:
         paths:
           - backend:
+              serviceName: ssl-redirect
+              servicePort: use-annotation
+          - backend:
               serviceName: {{ $elasticsearchName }}-hq
               servicePort: 5000
             # path: {{ $ingressPath }}
