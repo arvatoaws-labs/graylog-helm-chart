@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "elasticsearch.fullname" . }}-elasticsearch-hq-svc
+  name: hq-{{ template "elasticsearch.fullname" . }}-elasticsearch-svc
   namespace: {{ $.Release.Namespace }}
 spec:
   ports:
@@ -10,28 +10,28 @@ spec:
     protocol: TCP
     targetPort: ui
   selector:
-    app:  {{ template "elasticsearch.fullname" . }}-elasticsearch-hq
+    app:  hq-{{ template "elasticsearch.fullname" . }}-elasticsearch
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    app:  {{ template "elasticsearch.fullname" . }}-elasticsearch-hq
-  name:  {{ template "elasticsearch.fullname" . }}-elasticsearch-hq
+    app:  hq-{{ template "elasticsearch.fullname" . }}-elasticsearch
+  name:  hq-{{ template "elasticsearch.fullname" . }}-elasticsearch
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app:  {{ template "elasticsearch.fullname" . }}-elasticsearch-hq
+      app:  hq-{{ template "elasticsearch.fullname" . }}-elasticsearch
   template:
     metadata:
       labels:
-        app:  {{ template "elasticsearch.fullname" . }}-elasticsearch-hq
+        app:  hq-{{ template "elasticsearch.fullname" . }}-elasticsearch
     spec:
       containers:
       - image: elastichq/elasticsearch-hq
         imagePullPolicy: Always
-        name:  {{ template "elasticsearch.fullname" . }}-elasticsearch-hq
+        name:  hq-{{ template "elasticsearch.fullname" . }}-elasticsearch
         env:
           - name: HQ_DEFAULT_URL
             value:
