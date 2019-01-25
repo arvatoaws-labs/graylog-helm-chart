@@ -1,5 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "graylog.fullname" . -}}
+{{- $elasticsearchName := include "elasticsearch.fullname" . -}}
 {{- $ingressPath := .Values.ingress.path -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -36,5 +37,8 @@ spec:
           - backend:
               serviceName: {{ $fullName }}
               servicePort: http
+          - backend:
+              serviceName: {{ $elasticsearchName }}-hq
+              servicePort: 5000
             # path: {{ $ingressPath }}
 {{- end }}
