@@ -36,7 +36,7 @@ spec:
         app:  hq-{{ template "elasticsearch.fullname" . }}
     spec:
       containers:
-      - image: "elastichq/elasticsearch-hq:develop"
+      - image: "elastichq/elasticsearch-hq"
         imagePullPolicy: Always
         name:  hq-{{ template "elasticsearch.fullname" . }}
         env:

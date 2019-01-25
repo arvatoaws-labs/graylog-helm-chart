@@ -106,7 +106,7 @@ graylog:
         limits:
           cpu: 1.5
           memory: 2048Mi
-    javaOpts: "-Xmx2048M -Xms1536"
+    javaOpts: "-Xmx2048M -Xms1536M"
 
   slave:
     name: slave
@@ -131,4 +131,4 @@ graylog:
         limits:
           cpu: 1.5
           memory: 2048Mi
-    javaOpts: "-Xmx2048M -Xms1536"
+    javaOpts: "-Xmx2048M -Xms1536M"
