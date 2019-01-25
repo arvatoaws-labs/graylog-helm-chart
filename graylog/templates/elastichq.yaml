@@ -8,7 +8,7 @@ metadata:
   component: elastichq-service-{{ .Release.Name }}
   release: {{ .Release.Name }}
   heritage: {{ .Release.Service }}
-  svcmon: {{ .Release.Name }}-{{ template "elasticsearch.name" . }}
+  svcmon: {{ .Release.Name }}-{{ template "graylog.name" . }}-elasticsearch-hq
 spec:
   ports:
   - name: ui
