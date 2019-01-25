@@ -41,7 +41,7 @@ spec:
           command: ['sh', '-c', 'until nslookup {{ .Release.Name }}-mongodb; do echo waiting for {{ .Release.Name }}-mongodb; sleep 2; done;']
         - name: init-elasticsearch-client
           image: busybox
-          command: ['sh', '-c', 'until nslookup {{ .Release.Name }}-elasticsearch-client; do echo waiting for {{ .Release.Name }}-elasticsearch-client; sleep 2; done;']
+          command: ['sh', '-c', 'until nslookup {{ .Release.Name }}-elasticsearch; do echo waiting for {{ .Release.Name }}-elasticsearch; sleep 2; done;']
       containers:
         - name: graylog-master
           image: "{{ .Values.graylog.image.repository }}:{{ .Values.graylog.image.tag }}"
