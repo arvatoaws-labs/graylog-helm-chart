@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "elasticsearch.fullname" . }}-cerebro
+  namespace: {{ $.Release.Namespace }}
+  app: {{ template "elasticsearch.fullname" . }}-cerebro
+  chart: {{ template "graylog.chart" . }}
+  component: elasticsearch-cerebro-service-{{ .Release.Name }}
+  release: {{ .Release.Name }}
+  heritage: {{ .Release.Service }}
+  svcmon: {{ .Release.Name }}-{{ template "graylog.name" . }}-elasticsearch-cerebro
+spec:
+  ports:
+  - name: ui
+    port: 9000
+    protocol: TCP
+    targetPort: ui
+  selector:
+    app:  cerebro-{{ template "elasticsearch.fullname" . }}
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app:  cerebro-{{ template "elasticsearch.fullname" . }}
+  name:  cerebro-{{ template "elasticsearch.fullname" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app:  cerebro-{{ template "elasticsearch.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app:  cerebro-{{ template "elasticsearch.fullname" . }}
+    spec:
+      containers:
+      - image: "yannart/cerebro"
+        imagePullPolicy: Always
+        name:  cerebro-{{ template "elasticsearch.fullname" . }}
+        ports:
+        - name: ui
+          containerPort: 9000
+          protocol: TCP
+        stdin: true
+        tty: true
