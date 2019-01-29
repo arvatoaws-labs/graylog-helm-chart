@@ -36,12 +36,40 @@ spec:
         app:  cerebro-{{ template "elasticsearch.fullname" . }}
     spec:
       containers:
-      - image: "yannart/cerebro"
+      - image: "arvatoaws/cerebro"
         imagePullPolicy: Always
         name:  cerebro-{{ template "elasticsearch.fullname" . }}
         ports:
         - name: ui
           containerPort: 9000
           protocol: TCP
+        env:
+        - name: CEREBRO_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "graylog.master.fullname" . }}
+              key: password-secret
+        - name: CEREBRO_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "graylog.master.fullname" . }}
+              key: root-password
+        - name: CEREBRO_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "graylog.master.fullname" . }}
+              key: root-username
+        - name: CEREBRO_HOST_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "elasticsearch.fullname" . }}-auth
+              key: ADMIN_PASSWORD
+        - name: CEREBRO_HOST_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "elasticsearch.fullname" . }}-auth
+              key: ADMIN_USERNAME
+        - name: CEREBRO_HOST
+          value: "http://{{ .Release.Name }}-elasticsearch:9200"
         stdin: true
         tty: true
