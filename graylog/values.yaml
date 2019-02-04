@@ -13,76 +13,50 @@ ingress:
 
 mongodb:
   name: mongodb
-  usePassword: true
-  mongodbDatabase: graylog
-  mongodbUsername: graylog
-  mongodbPassword: secret
-  metrics:
-    enabled: true
-    serviceMonitor:
-      enabled: true
-      additionalLabels:
-        release: prometheus
-
-  replicaSet:
-    enabled: true
-    replicas:
-      secondary: "2"
-      arbiter: "0"
+  version: 3.6-v1
+  replicas: 3
+  replicaSetName: koen
+  storage:
+    storageClass: gp2
+    storageSize: 5Gi
+  mongodbDatabase: admin
 
 elasticsearch:
   name: elasticsearch
-  appVersion: "5.6.4"
-
-  image:
-    repository: "docker.elastic.co/elasticsearch/elasticsearch"
-    tag: "5.6.4"
-
-  cluster:
-    xpackEnable: false
-    env:
-      xpack.security.enabled: 'false'
-      XPACK_MONITORING_ENABLED: 'false'
-
+  version: 6.4
   client:
+    storage:
+      storageClass: gp2
+      storageSize: 1Gi
+    limits:
+      cpu: 1
+      memory: 1024Mi
+    requests:
+      cpu: 256m
+      memory: 512Mi
     replicas: 2
-    resources:
-      limits:
-        cpu: "1"
-        memory: "1024Mi"
-      requests:
-        cpu: "256m"
-        memory: "512Mi"
-
   master:
+    storage:
+      storageClass: gp2
+      storageSize: 4Gi
+    limits:
+      cpu: 1
+      memory: 1024Mi
+    requests:
+      cpu: 256m
+      memory: 512Mi
     replicas: 3
-    persistence:
-      size: "4Gi"
-      storageClass: "gp2"
-    resources:
-      limits:
-        cpu: "1"
-        memory: "1024Mi"
-      requests:
-        cpu: "256m"
-        memory: "512Mi"
-
   data:
-    replicas: 2
-    persistence:
-      size: "500Gi"
-      storageClass: "st1"
-    resources:
-      limits:
-        cpu: "1"
-        memory: "2048Mi"
-      requests:
-        cpu: "1"
-        memory: "1536Mi"
-
-elasticsearch-exporter:
-  es:
-    uri: "http://graylog-elasticsearch-client:9200"
+    storage:
+      storageClass: gp2
+      storageSize: 50Gi
+    limits:
+      cpu: 1
+      memory: 2048Mi
+    requests:
+      cpu: 1
+      memory: 1536Mi
+    replicas: 3
 
 graylog:
   name: graylog
@@ -132,6 +106,7 @@ graylog:
         limits:
           cpu: 1.5
           memory: 2048Mi
+    javaOpts: "-Xmx2048M -Xms1536M"
 
   slave:
     name: slave
@@ -156,3 +131,4 @@ graylog:
         limits:
           cpu: 1.5
           memory: 2048Mi
+    javaOpts: "-Xmx2048M -Xms1536M"

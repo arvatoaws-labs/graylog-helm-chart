@@ -1,5 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "graylog.fullname" . -}}
+{{- $elasticsearchName := include "elasticsearch.fullname" . -}}
 {{- $ingressPath := .Values.ingress.path -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -33,5 +34,17 @@ spec:
           - backend:
               serviceName: {{ $fullName }}
               servicePort: http
+    - host: {{ .Release.Name }}-elastichq.{{required "A valid .Values.ingress.domain entry required!" .Values.ingress.domain }}
+      http:
+        paths:
+          - backend:
+              serviceName: {{ $elasticsearchName }}-hq
+              servicePort: 5000
+    - host: {{ .Release.Name }}-cerebro.{{required "A valid .Values.ingress.domain entry required!" .Values.ingress.domain }}
+      http:
+        paths:
+          - backend:
+              serviceName: {{ $elasticsearchName }}-cerebro
+              servicePort: 9000
             # path: {{ $ingressPath }}
 {{- end }}
