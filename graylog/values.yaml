@@ -65,7 +65,7 @@ graylog:
   metrics:
     serviceMonitor:
       additionalLabels:
-        release: prometheus
+        svcmon: prometheus
 
   image:
     repository: "arvatoaws/graylog"
