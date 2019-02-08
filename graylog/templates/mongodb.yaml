@@ -20,6 +20,6 @@ spec:
     prometheus:
       namespace: {{ $.Release.Namespace }}
       labels:
-        release: prometheus
+        svcmon: prometheus
       interval: 10s
     terminationPolicy: WipeOut
