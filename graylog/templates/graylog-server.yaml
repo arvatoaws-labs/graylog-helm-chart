@@ -25,6 +25,9 @@ spec:
         release: {{ .Release.Name }}
     spec:
       terminationGracePeriodSeconds: 70
+      securityContext:
+        runAsUser: 1100
+        allowPrivilegeEscalation: false
       initContainers:
         - name: init-mongodb-replicaset
           image: busybox
@@ -131,6 +134,7 @@ spec:
       name: graylog-persistent-storage
       annotations:
         volume.beta.kubernetes.io/storage-class: "{{ .Values.graylog.storageClass }}"
+        pv.beta.kubernetes.io/gid: "500"
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
