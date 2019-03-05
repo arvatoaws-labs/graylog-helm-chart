@@ -1,10 +1,10 @@
-{{- $servicePath := include "graylog.slave.fullname" . -}}
+{{- $servicePath := include "graylog.server.fullname" . -}}
 {{- $externalDomain := include "graylog.ingress.externalDomain" . -}}
 {{- $externalProtocol := include "graylog.ingress.externalProtocol" . -}}
 apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
-  name: {{ template "graylog.master.fullname" . }}
+  name: {{ template "graylog.server.fullname" . }}
   labels:
     app: {{ template "graylog.name" . }}-server
     chart: {{ template "graylog.chart" . }}
@@ -12,8 +12,8 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  serviceName: {{ template "graylog.master.fullname" . }}
-  replicas: {{ .Values.graylog.master.replicaCount }}
+  serviceName: {{ template "graylog.server.fullname" . }}
+  replicas: {{ .Values.graylog.server.replicaCount }}
   updateStrategy:
     type: "RollingUpdate"
   template:
@@ -25,16 +25,6 @@ spec:
         release: {{ .Release.Name }}
     spec:
       terminationGracePeriodSeconds: 70
-      affinity:
-          podAntiAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                - key: component
-                  operator: In
-                  values:
-                  - graylog-slave
-              topologyKey: kubernetes.io/hostname
       initContainers:
         - name: init-mongodb-replicaset
           image: busybox
@@ -54,17 +44,17 @@ spec:
           - name: GRAYLOG_PASSWORD_SECRET
             valueFrom:
               secretKeyRef:
-                name: {{ template "graylog.master.fullname" . }}
+                name: {{ template "graylog.server.fullname" . }}
                 key: password-secret
           - name: GRAYLOG_ROOT_PASSWORD_SHA2
             valueFrom:
               secretKeyRef:
-                name: {{ template "graylog.master.fullname" . }}
+                name: {{ template "graylog.server.fullname" . }}
                 key: root-password-sha256
           - name: GRAYLOG_ROOT_USERNAME
             valueFrom:
               secretKeyRef:
-                name: {{ template "graylog.master.fullname" . }}
+                name: {{ template "graylog.server.fullname" . }}
                 key: root-username
           - name: MONGODB_PASSWORD
             valueFrom:
@@ -99,7 +89,7 @@ spec:
           - name: ELASTICSEARCH_PORT
             value: "9200"
           - name: GRAYLOG_SERVER_JAVA_OPTS
-            value: "{{ .Values.graylog.master.javaOpts }}"
+            value: "{{ .Values.graylog.server.javaOpts }}"
           - name: GRAYLOG_WEB_LISTEN_URI
             value: "http://0.0.0.0:{{ .Values.graylog.web.service.internalPort }}/"
           - name: GRAYLOG_WEB_ENDPOINT_URI
@@ -122,7 +112,7 @@ spec:
             mountPath: /usr/share/graylog/data/journal
             subPath: graylog
           resources:
-{{ toYaml .Values.graylog.master.containers.resources | indent 12 }}
+{{ toYaml .Values.graylog.server.containers.resources | indent 12 }}
           readinessProbe:
             httpGet:
               path: /api/system/lbstatus
@@ -132,7 +122,7 @@ spec:
             timeoutSeconds: 3
             successThreshold: 1
             failureThreshold: 4
-    {{- with .Values.graylog.master.affinity }}
+    {{- with .Values.graylog.server.affinity }}
       affinity:
 {{ toYaml . | indent 8 }}
     {{- end }}

@@ -15,7 +15,7 @@ mongodb:
   name: mongodb
   version: 3.6-v1
   replicas: 3
-  replicaSetName: koen
+  replicaSetName: graylog
   storage:
     storageClass: gp2
     storageSize: 5Gi
@@ -60,7 +60,7 @@ elasticsearch:
 
 graylog:
   name: graylog
-  appVersion: 2.4.6
+  appVersion: 2.5.0
 
   metrics:
     serviceMonitor:

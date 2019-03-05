@@ -51,25 +51,12 @@ External protocol
 Create a default fully qualified graylog master name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "graylog.master.fullname" -}}
+{{- define "graylog.server.fullname" -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- if contains $name .Release.Name -}}
-{{- printf "%s-%s" .Release.Name .Values.graylog.master.name | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Release.Name .Values.graylog.server.name | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
-{{- printf "%s-%s-%s" .Release.Name $name .Values.graylog.master.name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
-Create a default fully qualified graylog slave name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-*/}}
-{{- define "graylog.slave.fullname" -}}
-{{- $name := default .Chart.Name .Values.nameOverride -}}
-{{- if contains $name .Release.Name -}}
-{{- printf "%s-%s" .Release.Name .Values.graylog.slave.name | trunc 63 | trimSuffix "-" -}}
-{{- else -}}
-{{- printf "%s-%s-%s" .Release.Name $name .Values.graylog.slave.name | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.graylog.server.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 {{- end -}}
 
