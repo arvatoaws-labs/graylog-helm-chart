@@ -110,10 +110,10 @@ spec:
             name: gelf-input
           - containerPort: 1514
             name: syslog-input
-          volumeMounts:
-          - name: graylog-persistent-storage
-            mountPath: /usr/share/graylog/data/journal
-            subPath: graylog
+          # volumeMounts:
+          # - name: graylog-persistent-storage
+          #   mountPath: /usr/share/graylog/data/journal
+          #   subPath: graylog
           resources:
 {{ toYaml .Values.graylog.server.containers.resources | indent 12 }}
           readinessProbe:
