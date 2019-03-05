@@ -6,9 +6,9 @@ kind: StatefulSet
 metadata:
   name: {{ template "graylog.master.fullname" . }}
   labels:
-    app: {{ template "graylog.name" . }}-master
+    app: {{ template "graylog.name" . }}-server
     chart: {{ template "graylog.chart" . }}
-    component: graylog-master
+    component: graylog-server
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
@@ -20,8 +20,8 @@ spec:
     metadata:
       labels:
         graylog: "true"
-        app: {{ template "graylog.name" . }}-master
-        component: graylog-master
+        app: {{ template "graylog.name" . }}-server
+        component: graylog-server
         release: {{ .Release.Name }}
     spec:
       terminationGracePeriodSeconds: 70
@@ -43,7 +43,7 @@ spec:
           image: busybox
           command: ['sh', '-c', 'until nslookup {{ .Release.Name }}-elasticsearch; do echo waiting for {{ .Release.Name }}-elasticsearch; sleep 2; done;']
       containers:
-        - name: graylog-master
+        - name: graylog-server
           image: "{{ .Values.graylog.image.repository }}:{{ .Values.graylog.image.tag }}"
           imagePullPolicy: Always
           env:
@@ -94,8 +94,6 @@ spec:
             value: "{{ .Values.mongodb.mongodbDatabase }}"
           - name: MONGODB_REPLICASET
             value: "{{ .Values.mongodb.replicaSetName }}"
-          - name: GRAYLOG_IS_MASTER
-            value: "true"
           - name: ELASTICSEARCH_URL
             value: "{{ .Release.Name }}-elasticsearch"
           - name: ELASTICSEARCH_PORT
