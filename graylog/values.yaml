@@ -83,8 +83,8 @@ graylog:
       externalPort: 80
       internalPort: 9000
 
-  master:
-    name: master
+  server:
+    name: server
     replicaCount: 1
 
     affinity:
@@ -95,33 +95,8 @@ graylog:
               - key: component
                 operator: In
                 values:
-                - graylog-slave
+                - graylog-server
             topologyKey: kubernetes.io/hostname
-
-    containers:
-      resources:
-        requests:
-          cpu: 1
-          memory: 1536Mi
-        limits:
-          cpu: 1.5
-          memory: 2048Mi
-    javaOpts: "-Xmx2048M -Xms1536M"
-
-  slave:
-    name: slave
-    replicaCount: 2
-
-    affinity:
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-            - key: component
-              operator: In
-              values:
-              - graylog-master
-          topologyKey: kubernetes.io/hostname
 
     containers:
       resources:
