@@ -22,9 +22,9 @@ spec:
     path: '/api/plugins/org.graylog.plugins.metrics.prometheus/metrics'
     basicAuth:
       password:
-        name: {{ template "graylog.master.fullname" . }}
+        name: {{ template "graylog.server.fullname" . }}
         key: root-password
       username:
-        name: {{ template "graylog.master.fullname" . }}
+        name: {{ template "graylog.server.fullname" . }}
         key: root-username
     
