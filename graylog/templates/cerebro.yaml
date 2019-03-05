@@ -47,17 +47,17 @@ spec:
         - name: CEREBRO_SECRET
           valueFrom:
             secretKeyRef:
-              name: {{ template "graylog.master.fullname" . }}
+              name: {{ template "graylog.server.fullname" . }}
               key: password-secret
         - name: CEREBRO_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ template "graylog.master.fullname" . }}
+              name: {{ template "graylog.server.fullname" . }}
               key: root-password
         - name: CEREBRO_USERNAME
           valueFrom:
             secretKeyRef:
-              name: {{ template "graylog.master.fullname" . }}
+              name: {{ template "graylog.server.fullname" . }}
               key: root-username
         - name: CEREBRO_HOST_PASSWORD
           valueFrom:
