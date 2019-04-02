@@ -44,6 +44,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
           - name: GRAYLOG_PASSWORD_SECRET
             valueFrom:
               secretKeyRef:
