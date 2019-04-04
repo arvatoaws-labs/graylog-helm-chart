@@ -49,7 +49,7 @@ elasticsearch:
   data:
     storage:
       storageClass: gp2
-      storageSize: 50Gi
+      storageSize: 200Gi
     limits:
       cpu: 1
       memory: 2048Mi
