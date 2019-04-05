@@ -5,6 +5,7 @@ metadata:
   namespace: {{ $.Release.Namespace }}
 spec:
   version: {{ .Values.elasticsearch.version }}
+  terminationPolicy: WipeOut
   storageType: Durable
   topology:
     master:
@@ -65,4 +66,3 @@ spec:
       labels:
         svcmon: prometheus
       interval: 10s
-    terminationPolicy: WipeOut
