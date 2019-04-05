@@ -5,7 +5,7 @@ metadata:
   namespace: {{ $.Release.Namespace }}
 spec:
   version: {{ .Values.elasticsearch.version }}
-  terminationPolicy: WipeOut
+  terminationPolicy: Delete
   storageType: Durable
   topology:
     master:
