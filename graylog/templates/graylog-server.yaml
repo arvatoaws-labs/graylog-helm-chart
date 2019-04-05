@@ -114,10 +114,12 @@ spec:
             name: gelf-input
           - containerPort: 1514
             name: syslog-input
-          # volumeMounts:
-          # - name: graylog-persistent-storage
-          #   mountPath: /usr/share/graylog/data/journal
-          #   subPath: graylog
+          {{- if .Values.graylog.persistence.enabled }}
+          volumeMounts:
+          - name: graylog-persistent-storage
+            mountPath: /usr/share/graylog/data/journal
+            subPath: graylog
+          {{- end }}
           resources:
 {{ toYaml .Values.graylog.server.containers.resources | indent 12 }}
           readinessProbe:
@@ -133,14 +135,16 @@ spec:
       affinity:
 {{ toYaml . | indent 8 }}
     {{- end }}
+  {{- if .Values.graylog.persistence.enabled }}
   volumeClaimTemplates:
   - metadata:
       name: graylog-persistent-storage
       annotations:
-        volume.beta.kubernetes.io/storage-class: "{{ .Values.graylog.storageClass }}"
+        volume.beta.kubernetes.io/storage-class: "{{ .Values.graylog.storage.storageClass }}"
         pv.beta.kubernetes.io/gid: "500"
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: "{{ .Values.graylog.storageSize }}"
+          storage: "{{ .Values.graylog.storage.storageSize }}"
+  {{- end }}
