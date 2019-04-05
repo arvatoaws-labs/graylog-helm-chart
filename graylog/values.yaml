@@ -75,8 +75,12 @@ graylog:
 #  rootPassword:
 #  passwordSecret:
 
-  storageClass: "gp2"
-  storageSize: "10Gi"
+  persistence:
+    enabled: false
+    
+  storage:
+    storageClass: "gp2"
+    storageSize: "10Gi"
 
   web:
     service:
