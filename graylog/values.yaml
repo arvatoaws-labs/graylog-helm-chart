@@ -13,7 +13,7 @@ ingress:
 
 mongodb:
   name: mongodb
-  version: 3.6-v2
+  version: "4.1.7"
   replicas: 3
   replicaSetName: graylog
   storage:
@@ -23,7 +23,7 @@ mongodb:
 
 elasticsearch:
   name: elasticsearch
-  version: 6.4
+  version: "6.5.3"
   client:
     storage:
       storageClass: gp2
