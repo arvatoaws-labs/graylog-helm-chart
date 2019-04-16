@@ -23,3 +23,7 @@ spec:
       labels:
         svcmon: prometheus
       interval: 10s
+  podTemplate:
+    spec:
+      resources:
+{{ toYaml .Values.mongodb.resources | indent 12 }}
