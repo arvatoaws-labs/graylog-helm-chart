@@ -71,5 +71,7 @@ spec:
               key: ADMIN_USERNAME
         - name: CEREBRO_HOST
           value: "http://{{ .Release.Name }}-elasticsearch:9200"
+          resources:
+{{ toYaml .Values.cebero.resources | indent 12 }}
         stdin: true
         tty: true
