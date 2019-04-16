@@ -35,13 +35,13 @@ spec:
         resources:
           requests:
             storage: {{ .Values.elasticsearch.data.storage.storageSize  }}
-        limits:
-          memory: {{ .Values.elasticsearch.data.limits.memory  }}
-          cpu: {{ .Values.elasticsearch.data.limits.cpu  }}
       resources:
         requests:
           memory: {{ .Values.elasticsearch.data.requests.memory  }}
           cpu: {{ .Values.elasticsearch.data.requests.cpu  }}
+        limits:
+          memory: {{ .Values.elasticsearch.data.limits.memory  }}
+          cpu: {{ .Values.elasticsearch.data.limits.cpu  }}          
     client:
       prefix: client
       replicas: {{ .Values.elasticsearch.client.replicas }}
