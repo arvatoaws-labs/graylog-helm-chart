@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "graylog.fullname" . }}-mongodb-config
+  namespace: {{ $.Release.Namespace }}
+data:
+  mongod.conf: |
+  storage:
+    wiredTiger:
+      engineConfig:
+        cacheSizeGB: 0.25
