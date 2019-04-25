@@ -9,3 +9,4 @@ data:
     wiredTiger:
       engineConfig:
         cacheSizeGB: 0.25
+
