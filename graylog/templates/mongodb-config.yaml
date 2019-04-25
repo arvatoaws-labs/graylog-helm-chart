@@ -5,8 +5,7 @@ metadata:
   namespace: {{ $.Release.Namespace }}
 data:
   mongod.conf: |
-  storage:
-    wiredTiger:
-      engineConfig:
-        cacheSizeGB: 0.25
-
+    storage:
+      wiredTiger:
+        engineConfig:
+          cacheSizeGB: 0.25
