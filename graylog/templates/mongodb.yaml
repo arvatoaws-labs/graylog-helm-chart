@@ -16,6 +16,9 @@ spec:
     resources:
       requests:
         storage: {{ .Values.mongodb.storage.storageSize  }}
+  configSource:
+    configMap:
+      name: {{ template "graylog.fullname" . }}-mongodb-config     
   monitor:
     agent: prometheus.io/coreos-operator
     prometheus:
