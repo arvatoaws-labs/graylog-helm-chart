@@ -19,7 +19,7 @@ spec:
   configSource:
     configMap:
       name: {{ template "graylog.fullname" . }}-mongodb-config   
-  {{ if .Values.mongodb.serviceMonitor.enabled }}
+  {{ if .Values.mongodb.metrics.serviceMonitor.enabled }}
   monitor:
     agent: prometheus.io/coreos-operator
     prometheus:
